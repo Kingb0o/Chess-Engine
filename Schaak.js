@@ -63,7 +63,23 @@ var init = function(diepte) {
 			}
 			
 			function minimax(node, depth, maximizingPlayer, movesDone, alpha, beta){
-				
+				/*if (depth == 0){
+					var history=game.history();
+					fakegame= new Chess();
+					for(var j=0; j<history.length; j++){
+						fakegame.move(history[j]);
+					}
+					for (var i=0; i<movesDone.length; i++){
+						var possibleMoves= fakegame.moves();
+						//	console.log("Depth:"+movesDone)
+						fakegame.move(possibleMoves[movesDone[movesDone.length-i-1]]);
+					} 
+					//console.log(fakegame.fen())
+					var returnValue= [Evaluation(fakegame.fen()), [movesDone[movesDone.length-1]]];
+					//console.log(returnValue)
+					return returnValue
+				}
+				*/
 				if(depth==0){
 					for (var i=0; i<movesDone.length; i++){
 						var possibleMoves= game.moves();
@@ -80,23 +96,26 @@ var init = function(diepte) {
 				var i;
 				var newvalue=[];
 				var history2=game.history();
-					fakegame= new Chess();
-					for(var j=0; j<history2.length; j++){
-						fakegame.move(history2[j]);
-					}
-				
-					for (var i=0; i<movesDone.length; i++){
-						var possibleMoves= fakegame.moves();
-						//console.log("Depth:"+movesDone)
-						fakegame.move(possibleMoves[movesDone[i]]);
-					} 
+				fakegame= new Chess();
+				for(var j=0; j<history2.length; j++){
+				      fakegame.move(history2[j]);
+				}
+
+				for (var i=0; i<movesDone.length; i++){
+				      var possibleMoves= fakegame.moves();
+				      //console.log("Depth:"+movesDone)
+				      fakegame.move(possibleMoves[movesDone[i]]);
+				    }
+
 				var children= fakegame.moves();
-				
+
+				if (children.length==0){
+						value=[Evaluation(fakegame.fen()), [movesDone[movesDone.length-1]]];
+						return value 
+					}
 				if (maximizingPlayer) {
 					var value =[-999999999, [0]];
-					if (children.length==0){
-						value=[Evaluation(fakegame.fen()), movesDone];
-					}
+					
 					for(i=0; i<children.length; i++){
 						movesDone[depth-1] = i;
 						newvalue=minimax(node+i, depth-1, false, JSON.parse(JSON.stringify(movesDone)), alpha, beta );
@@ -106,15 +125,16 @@ var init = function(diepte) {
 						if(newvalue[0]>value[0]){
 							value= newvalue; 
 						}
+						//alpha=Math.max(alpha, value[0]);
+						//if(alpha >= beta){break;}
 						
+						
+						//value = Math.max(value[0], minimax(node+1+i, depth-1, false, movesDone.push(i))[0]);
 					}
 					return value
 					}
 				else
 				var value =[999999999, [0]];
-				if (children.length==0){
-						value=[Evaluation(fakegame.fen()), movesDone];
-					}
 					for(i=0; i<children.length; i++){
 						movesDone[depth-1] = i;
 						newvalue=minimax(node+i, depth-1, true, JSON.parse(JSON.stringify(movesDone)), alpha, beta );
@@ -122,16 +142,38 @@ var init = function(diepte) {
 						if(newvalue[0]<value[0]){
 							value= newvalue;
 						}
-						
+						//beta=Math.max(beta, value[0])
+						//if(alpha <= beta){break;}
+						//value = Math.max(value[0], minimax(node+1+i, depth-1, false, movesDone.push(i))[0]);
 					} 
 					return value
 					
 			}
+			var aantalzetten=0;
+			var totaledenktijd=0;
 			var getBestMove=function () { 				
-				
+				var tijdvoor= new Date();
 				var res = minimax(0, diepte, true , [], -999999999, 999999999); 
-				console.log(res)
-				
+				console.log(res);
+				var tijdna= new Date();
+				var tijdsduur= tijdna.getTime()-tijdvoor.getTime();
+				aantalzetten+=1;
+				totaledenktijd+=tijdsduur;
+				var gemiddeldetijd= totaledenktijd/aantalzetten;
+				console.log ("het duurde:"+tijdsduur);
+				console.log("de denk tijd is gemiddeld:"+gemiddeldetijd);
+				/*
+				var bestMoves = scores.filter(myFunction);
+				function myFunction(value) {
+				return value > res-1;
+				}
+				var randomIndex = Math.floor(Math.random() * bestMoves.length);
+				var index;
+				for (q=0; q<randomIndex+1; q++){
+					index=scores.indexOf(res,index+1);
+					console.log(randomIndex)
+				}
+				*/
 				var randomIndex = Math.floor(Math.random() * res[1].length);
 				var possibleMoves= game.moves();
 				game.move(possibleMoves[res[1][randomIndex]]);
@@ -139,7 +181,24 @@ var init = function(diepte) {
 				updateStatus();
 				
 			} 
-			
+			/*= function( depth = 0){
+				var possibleMovesBlack= game.moves();
+				console.log(possibleMovesBlack);
+				var Evaluations=[];
+				var oldPosition= game.fen();
+				if (possibleMovesBlack===0) return;
+				var i;
+				for(i=0; i<possibleMovesBlack.length; i++){
+					
+				}
+				console.log(Evaluations);
+				Evaluations.sort(function(a, b){return a - b});
+				console.log(Evaluations);
+				game.move(Evaluations[0]);
+				board.position(game.fen());
+				updateStatus();
+			}
+			*/
 			var removeGreySquares = function() {
 			$('#board .square-55d63').css('background', '');
 			};
