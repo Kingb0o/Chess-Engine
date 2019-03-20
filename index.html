@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Chessboard</title>
+		<title>Chess engine</title>
         <link href="chessboard-0.3.0.css" rel="stylesheet" type="text/css"/>
 	
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	<meta name=theme-color content=#FBAE17>
-		
+				<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+				<meta name=theme-color content=#FBAE17>
 	</head>
 	<body>
 		<div id="board" style="width: 95%; max-width:400px"></div>
@@ -14,16 +13,21 @@
 			  <p>Status: <span id="status"></span></p>
 			  <p>PGN: <span id="pgn"></span></p>
 		</div>
-		<div id="board" style="width: 400px">
-			<script src="chessboard-0.3.0.js"></script>
-			<script src="jquery-1.10.1.min.js"></script>
-			<script src="json3.min.js"></script>
-			<script src="chess.js"></script>
-			<script src="Schaak.js"></script>
-			<script>
-			$(document).ready(init);
-			</script>
-			<img src="img/wP.png" id="3bb7-9e07-b11e-5f0f-e6e3-18c4-c8ad-bfab" alt="" class="piece-417db" data-piece="wP" style="display: none; height: 49px; width: 49px;">
+		<script src="chessboard-0.3.0.js"></script>
+		<script src="jquery-1.10.1.min.js"></script>
+		<script src="json3.min.js"></script>
+		<script src="chess.js"></script>
+		<script src="Schaak.js"></script>
+
+
+		<img src="img/chesspieces/wikipedia/wP.png" id="3bb7-9e07-b11e-5f0f-e6e3-18c4-c8ad-bfab" alt="" class="piece-417db" data-piece="wP" style="display: none; height: 49px; width: 49px;">
+
+		<!-- <p>FEN: <span id="fen"></span></p>-->
+		<div>
+			<button id="undo" onclick=$(document).ready(init(1))>Difficulty: Noob</button>
+			<button id="undo" onclick=$(document).ready(init(2))>Difficulty: Normal</button>
+			<button id="undo" onclick=$(document).ready(init(3))>Difficulty: Hard</button>
 		</div>
+
 	</body>
 </html>
