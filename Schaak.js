@@ -133,7 +133,9 @@ var init = function(diepte) {
              // doe de zetten die je wilt bekijken
              for (var i=0; i<movesDone.length; i++){
                  var possibleMoves= game.moves();
-                 //	console.log("Depth:"+movesDone)
+                 //
+                 //
+                 //console.log("Depth:"+movesDone)
                  game.move(possibleMoves[movesDone[i]]);
              } 
              // evalueer
