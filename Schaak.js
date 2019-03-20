@@ -193,7 +193,7 @@ var init = function(diepte) {
                  calphabeta[depth]=value[0];
                  
                  if(!(depth==0)){
-                     if(newvalue[0]>=calphabeta[depth-1]){console.log("gebruikt")
+                     if(newvalue[0]>=calphabeta[depth-1]){//console.log("gebruikt")
                        return value}
                      }
                  alphabeta=calphabeta;
@@ -219,7 +219,7 @@ var init = function(diepte) {
                  calphabeta[depth]=value[0];
                  //console.log(calphabeta[depth]+ "<" +calphabeta[depth-1]+ "i="+movesDone)
                  
-                 if(newvalue[0]<calphabeta[depth-1]){console.log("gebruikt2");
+                 if(newvalue[0]<calphabeta[depth-1]){//console.log("gebruikt2");
                       return value}
                  alphabeta=calphabeta;
                  
@@ -232,7 +232,7 @@ var init = function(diepte) {
     var getBestMove=function () { 				
         var tijdvoor= new Date();
         var res = minimax(diepte, 0, true , [], [-999999999, 999999999, -999999999]);
-        console.log(res);
+        //console.log(res);
         var tijdna= new Date();
         var tijdsduur= tijdna.getTime()-tijdvoor.getTime();
         aantalzetten+=1;
